@@ -23,6 +23,5 @@ COPY . .
 # Ensure logs are sent straight to Render's log stream
 ENV PYTHONUNBUFFERED=1
 
-# [CORRECT COMMAND] Use gunicorn to run the flask_app object inside the app.py file.
-# This starts the web server so your Render URL will work.
-CMD ["gunicorn", "--bind", "0.0.0.0:$PORT", "--workers", "1", "app:flask_app"]
+# [THE FIX] Use the "shell" form of CMD to allow the $PORT variable to be expanded by the shell.
+CMD gunicorn --bind 0.0.0.0:$PORT --workers 1 app:flask_app
